@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Cloud Master</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--sky1:#6ec1ff;--sky2:#cfeeff;--sky3:#fff;--card:rgba(255,255,255,.92);--ink:#14304f;--mute:#5b7390;--acc:#2f80ed;--acc2:#6c5ce7;--ok:#1fa971;--gold:#f5a623;--cb:#fff;--bgc:rgba(255,255,255,.75);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#0a1f3d;--sky2:#14355f;--sky3:#1b4170;--card:rgba(27,53,88,.92);--ink:#eaf3ff;--mute:#9bb4d3;--cb:#2a4a78;--bgc:rgba(255,255,255,.07)}}
+:root[data-theme="dark"]{--sky1:#0a1f3d;--sky2:#14355f;--sky3:#1b4170;--card:rgba(27,53,88,.92);--ink:#eaf3ff;--mute:#9bb4d3;--cb:#2a4a78;--bgc:rgba(255,255,255,.07)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Prompt',system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--sky1),var(--sky2) 55%,var(--sky3)) fixed;background-color:var(--sky2);min-height:100vh;overflow-x:hidden}
+.sky i{position:fixed;left:0;width:150px;height:44px;background:var(--bgc);border-radius:99px;pointer-events:none;animation:drift 80s linear infinite;z-index:0}
+.sky i::before,.sky i::after{content:'';position:absolute;background:inherit;border-radius:50%}
+.sky i::before{width:70px;height:70px;top:-34px;left:22px}.sky i::after{width:52px;height:52px;top:-22px;left:76px}
+.sky i:nth-child(1){top:7%}.sky i:nth-child(2){top:30%;animation-duration:110s;animation-delay:-40s;scale:1.5}
+.sky i:nth-child(3){top:58%;animation-duration:95s;animation-delay:-70s}.sky i:nth-child(4){top:82%;animation-duration:130s;animation-delay:-20s;scale:1.3}
+@keyframes drift{from{transform:translateX(-25vw)}to{transform:translateX(115vw)}}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:clamp(28px,6vw,52px);margin:6px 0 4px;text-align:center;font-weight:700}
+h1 .gt{background:linear-gradient(90deg,#2f80ed,#6c5ce7 55%,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 10px}
+@media(prefers-color-scheme:dark){h1 .gt{background:linear-gradient(90deg,#7dd3fc,#c4b5fd 55%,#f9a8d4);-webkit-background-clip:text;background-clip:text}}
+.sub{text-align:center;color:var(--mute);margin:0 0 18px}
+.panel{background:var(--card);backdrop-filter:blur(10px);border-radius:26px;padding:22px;box-shadow:0 12px 34px rgba(20,50,100,.22);border:1px solid rgba(255,255,255,.5)}
+button{font-family:inherit;cursor:pointer;border:0;border-radius:16px;padding:12px 18px;font-size:16px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 4px 0 rgba(40,40,140,.35);transition:transform .12s,box-shadow .12s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(40,40,140,.35)}
+button.alt{background:transparent;color:var(--ink);border:2px solid var(--mute);box-shadow:none}
+input{font-family:inherit;font-size:16px;padding:11px 14px;border-radius:14px;border:2px solid transparent;background:rgba(120,150,190,.18);color:var(--ink);width:100%;outline:0}
+input:focus{border-color:var(--acc)}
+.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:26px}
+.sc{background:var(--card);border-radius:18px;padding:8px 12px 10px;text-align:center;box-shadow:0 6px 16px rgba(20,50,100,.16);border-top:7px solid var(--tc,var(--acc))}
+.sc b{font-size:32px;display:block;line-height:1.1;color:var(--tc,var(--acc))}.sc span{font-size:13px;color:var(--mute);display:block}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:36px 18px;padding-top:26px;margin-bottom:26px}
+.cloud{position:relative;height:84px;border-radius:60px;background:var(--cb);color:var(--acc);font-size:30px;font-weight:700;padding:0;box-shadow:0 8px 0 rgba(47,128,237,.2),0 14px 20px rgba(20,50,100,.18);animation:bob 4.5s ease-in-out infinite}
+.cloud::before,.cloud::after{content:'';position:absolute;background:var(--cb);border-radius:50%;z-index:0}
+.cloud::before{width:46%;height:82%;top:-34%;left:14%}.cloud::after{width:36%;height:64%;top:-20%;right:16%}
+.cloud span{position:relative;z-index:1}
+.cloud:hover{scale:1.08}.cloud:active{transform:none}
+.cloud:nth-child(3n){animation-delay:-1.2s}.cloud:nth-child(3n+1){animation-delay:-2.6s}.cloud:nth-child(5n){animation-delay:-3.6s}
+.cloud.done{--cb:#bfccdd;color:#7e92ab;animation:none;box-shadow:none;pointer-events:none;opacity:.6}
+@keyframes bob{50%{transform:translateY(-7px)}}
+.modal{position:fixed;inset:0;background:rgba(8,20,45,.62);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:9}
+.modal .panel{max-width:660px;width:100%;max-height:92vh;overflow:auto;animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.88);opacity:0}}
+.tag{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-radius:99px;padding:3px 14px;font-size:14px;font-weight:600}
+.q{font-size:clamp(20px,3.6vw,28px);font-weight:600;margin:14px 0;line-height:1.45}
+.opt{display:flex;align-items:center;gap:12px;width:100%;margin:9px 0;padding:11px 14px;border-radius:16px;border:2px solid rgba(120,150,190,.45);font-size:18px}
+.opt i{flex:none;width:34px;height:34px;border-radius:50%;background:rgba(120,150,190,.25);display:grid;place-items:center;font-style:normal;font-weight:700}
+.opt.right{border-color:var(--ok);background:rgba(31,169,113,.16)}.opt.right i{background:var(--ok);color:#fff}
+.ans{background:rgba(31,169,113,.14);border-left:6px solid var(--ok);padding:12px 16px;border-radius:12px;margin:14px 0;font-size:17px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.row button{flex:1;min-width:110px}
+.rank{display:flex;justify-content:space-between;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(120,150,190,.35);font-size:18px}
+.hide{display:none}.x2{color:var(--gold);font-weight:700}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.turn{text-align:center;font-size:clamp(18px,3vw,24px);font-weight:600;background:var(--card);border-radius:99px;padding:10px 20px;margin:0 auto 18px;width:fit-content;max-width:100%;box-shadow:0 6px 16px rgba(20,50,100,.16)}
+.sc{transition:transform .2s,box-shadow .2s}.sc.on{transform:translateY(-5px) scale(1.05);box-shadow:0 0 0 3px var(--tc),0 12px 24px rgba(20,50,100,.25)}
+
+:root{--cb0:#fff;--t1:#ffe9f0;--t2:#e6f6ff;--t3:#fff4d6;--t4:#efe9ff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--cb0:#2a4a78;--t1:#4a3a78;--t2:#1f5f86;--t3:#6b5a2e;--t4:#3d4a8a}}
+.cloud{--cb:var(--ct,var(--cb0))}.cloud:nth-child(5n+2){--ct:var(--t1)}.cloud:nth-child(5n+3){--ct:var(--t2)}.cloud:nth-child(5n+4){--ct:var(--t3)}.cloud:nth-child(5n){--ct:var(--t4)}
+.cloud.done{--cb:#bfccdd}
+.sky::before{content:'';position:fixed;top:-60px;right:-40px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,#fff7b0 0 34%,rgba(255,225,100,.55) 35% 55%,transparent 70%);animation:pulse 6s ease-in-out infinite;z-index:0}
+@media(prefers-color-scheme:dark){.sky::before{background:radial-gradient(circle,#f4f7ff 0 34%,rgba(190,210,255,.3) 35% 55%,transparent 70%)}}
+@keyframes pulse{50%{scale:1.1}}
+.tools{display:flex;gap:8px;justify-content:flex-end}.tools button{padding:6px 12px;font-size:14px;background:var(--card);color:var(--ink);box-shadow:none;border:2px solid rgba(120,150,190,.5)}
+.cf{position:fixed;top:-40px;z-index:20;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(112vh) rotate(540deg)}}
+.fl{position:fixed;left:50%;top:38%;translate:-50% 0;z-index:21;font-size:68px;font-weight:700;color:var(--gold);text-shadow:0 4px 0 rgba(0,0,0,.25);animation:rise 1.3s ease-out forwards;pointer-events:none}
+@keyframes rise{from{opacity:0;transform:scale(.4)}20%{opacity:1;transform:scale(1.2)}to{opacity:0;transform:translateY(-130px)}}
+.shk{animation:shk .6s}@keyframes shk{20%{transform:translateX(-12px)}40%{transform:translateX(12px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.sc.bump{animation:bmp .6s}@keyframes bmp{40%{transform:scale(1.22) rotate(-2deg)}}
+
+h1{letter-spacing:.5px;filter:drop-shadow(0 4px 10px rgba(60,80,200,.25))}
+h1 .gt{background-size:200% 100%;animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:200% 0}}
+.sub{display:table;margin:0 auto 20px;background:rgba(255,255,255,.55);backdrop-filter:blur(6px);padding:6px 18px;border-radius:99px;font-size:15px}
+@media(prefers-color-scheme:dark){.sub{background:rgba(255,255,255,.08)}}
+.sky::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(38% 30% at 15% 8%,rgba(168,85,247,.32),transparent),radial-gradient(34% 30% at 88% 45%,rgba(56,189,248,.35),transparent),radial-gradient(42% 34% at 40% 95%,rgba(244,114,182,.28),transparent);animation:aur 14s ease-in-out infinite alternate}
+@keyframes aur{to{transform:translate(2%,3%) scale(1.08);opacity:.75}}
+.panel{box-shadow:0 20px 50px rgba(30,50,130,.25),inset 0 1px 0 rgba(255,255,255,.7)}
+button{box-shadow:0 4px 0 rgba(40,40,140,.35),0 10px 20px rgba(90,90,240,.3)}
+button.alt{box-shadow:none}
+.cloud,.cloud::before,.cloud::after{background-image:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0) 62%)}
+.cloud{font-size:32px;text-shadow:0 2px 0 rgba(255,255,255,.7);transition:box-shadow .2s,scale .2s}
+.cloud:hover{box-shadow:0 8px 0 rgba(47,128,237,.25),0 0 0 4px rgba(255,255,255,.7),0 18px 34px rgba(80,90,240,.4)}
+.cloud.done,.cloud.done::before,.cloud.done::after{background-image:none}
+.sc{background:linear-gradient(160deg,var(--card),rgba(255,255,255,.55));border:1px solid rgba(255,255,255,.6);border-top:7px solid var(--tc,var(--acc))}
+.sc b{font-size:38px;font-variant-numeric:tabular-nums;text-shadow:0 2px 10px color-mix(in srgb,var(--tc) 35%,transparent)}
+.sc span:first-child{font-weight:600;color:var(--ink);font-size:14px}
+.sc.on{box-shadow:0 0 0 3px var(--tc),0 0 26px color-mix(in srgb,var(--tc) 55%,transparent),0 14px 26px rgba(20,50,100,.25)}
+.progw{max-width:520px;margin:0 auto 22px;text-align:center;font-size:13px;color:var(--ink)}
+.prog{height:10px;border-radius:99px;background:rgba(255,255,255,.55);margin-top:5px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.15)}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#6c5ce7,#ec4899);border-radius:99px;transition:width .6s}
+.turn{border:1px solid rgba(255,255,255,.6)}
+.modal .panel{padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.7);border-top:6px solid var(--acc2)}
+.q{font-size:clamp(21px,3.8vw,30px)}
+.opt{background:rgba(120,150,190,.08);transition:transform .15s,border-color .15s}.opt:hover{transform:translateX(5px);border-color:var(--acc)}
+.opt.right{animation:glow 1.2s ease-in-out infinite alternate}
+@keyframes glow{to{box-shadow:0 0 18px rgba(31,169,113,.6)}}
+.ans{background:linear-gradient(90deg,rgba(31,169,113,.2),rgba(31,169,113,.06))}
+.rank:nth-of-type(1){background:linear-gradient(90deg,rgba(245,166,35,.28),transparent);border-radius:14px;padding:14px 12px;font-weight:700;font-size:21px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:18px}
+.how div{background:rgba(120,150,190,.15);border-radius:18px;padding:14px 10px;text-align:center;font-size:14px}
+.how b{display:block;font-size:26px;margin-bottom:2px;background:linear-gradient(135deg,var(--acc),#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head><body><div class="sky"><i></i><i></i><i></i><i></i></div><div class="wrap">
+<div class="tools"><button class="alt" id="bs" onclick="tgS()">🔊 เสียง</button><button class="alt" id="bm" onclick="tgM()">🎵 เพลง</button></div>
+<h1><span>☁️</span><span class="gt">The Cloud Master</span><span>☁️</span></h1>
+<p class="sub">เกมสรุปบทเรียน Cloud Computing · แข่งเป็นทีม เก็บก้อนเมฆ ชิงตำแหน่ง Cloud Master</p>
+
+<div id="setup" class="panel">
+  <b>ตั้งชื่อทีม (2–5 ทีม)</b>
+  <div class="teams" id="tin"></div>
+  <div class="row"><button class="alt" onclick="addT(-1)">− ลดทีม</button><button class="alt" onclick="addT(1)">+ เพิ่มทีม</button><button onclick="start()">🚀 เริ่มเกม</button></div>
+  <div class="how"><div><b>1</b>เลือกก้อนเมฆ<br>ตามตาของทีม</div><div><b>2</b>ช่วยกันคิด<br>แล้วตอบ</div><div><b>3</b>เฉลย<br>รับคะแนน</div><div><b>🌈 ⛈️</b>เมฆพิเศษ<br>ลุ้นพลิกเกม</div></div>
+</div>
+
+<div id="game" class="hide">
+  <div class="turn" id="turn"></div>
+  <div class="progw"><span id="pl"></span><div class="prog"><i id="pb"></i></div></div>
+  <div class="score" id="score"></div>
+  <div class="board" id="board"></div>
+  <div class="row"><button class="alt" onclick="finish()">🏆 สรุปผล</button><button class="alt" onclick="location.reload()">🔄 เริ่มใหม่</button></div>
+</div>
+</div>
+<div id="modal" class="modal hide"><div class="panel" id="mbody"></div></div>
+
+<script>
+const CARDS=[
+{t:'เมฆจริงหรือเมฆปลอม?',k:'tf',q:'ถ้าลบแอป Google Drive ออกจากมือถือ ไฟล์ที่ซิงก์ไว้จะหายไปด้วย',a:'ปลอม ❌',e:'ไฟล์อยู่บนเซิร์ฟเวอร์ ไม่ได้อยู่ในแอป ลงแอปใหม่แล้วล็อกอิน ไฟล์ก็กลับมา'},
+{t:'เมฆจริงหรือเมฆปลอม?',k:'tf',q:'ตั้งลิงก์แชร์ไฟล์เป็น “ทุกคนที่มีลิงก์” แปลว่าเฉพาะคนที่เราส่งให้เท่านั้นที่เปิดได้',a:'ปลอม ❌',e:'ใครได้ลิงก์ต่อก็เปิดได้ ควรจำกัดสิทธิ์เฉพาะอีเมลที่ต้องการ'},
+{t:'เมฆจริงหรือเมฆปลอม?',k:'tf',q:'ข้อมูลอยู่บนคลาวด์แล้ว ไม่จำเป็นต้องสำรองข้อมูลอีก',a:'ปลอม ❌',e:'ลบพลาด ซิงก์ผิด หรือถูกแฮก ข้อมูลก็หายได้ ควรมีสำรองอีกที่'},
+{t:'ภารกิจทีมรายงาน',k:'mc',q:'เพื่อน 5 คนพิมพ์รายงานไฟล์เดียวกันพร้อมกัน และเห็นการแก้ไขของกันและกันทันที ใช้ประโยชน์ข้อใดของคลาวด์?',o:['ทำงานร่วมกันแบบเรียลไทม์','ไฟล์เล็กลงอัตโนมัติ','ไม่ต้องใช้อินเทอร์เน็ต','คอมพิวเตอร์เร็วขึ้น'],a:0,e:'ไฟล์เดียวอยู่ที่กลาง ทุกคนเข้าถึงและแก้ไขพร้อมกันได้ ไม่ต้องส่งไฟล์ไปมา'},
+{t:'จับกลุ่มให้ถูกบ้าน',k:'mc',q:'ข้อใดเป็นบริการแบบ SaaS ทั้งหมด?',o:['Canva, Netflix, Google Docs','เช่าเครื่องเสมือน, พื้นที่เก็บข้อมูล, เครือข่าย','ระบบปฏิบัติการ, ฐานข้อมูล, ตัวคอมไพเลอร์เท่านั้น','เครื่องพิมพ์, สแกนเนอร์, เมาส์'],a:0,e:'SaaS คือซอฟต์แวร์สำเร็จรูปที่เปิดใช้ผ่านเว็บ ส่วนข้อ 2 คือ IaaS'},
+{t:'ภารกิจสตาร์ทอัพ',k:'mc',q:'ทีมเขียนแอปอยากโฟกัสแค่ “โค้ด” ไม่อยากดูแลเซิร์ฟเวอร์และระบบปฏิบัติการ ควรเลือกบริการแบบใด?',o:['IaaS','PaaS','SaaS','ซื้อเซิร์ฟเวอร์เอง'],a:1,e:'PaaS คือแพลตฟอร์มสำหรับพัฒนาและรันแอป ผู้ให้บริการดูแลระบบพื้นฐานให้'},
+{t:'ภารกิจเลือกคลาวด์',k:'mc',q:'ธนาคารเก็บข้อมูลลูกค้าไว้ในระบบของตัวเอง แต่ใช้ผู้ให้บริการภายนอกรันเว็บประชาสัมพันธ์ เรียกว่า?',o:['Public Cloud','Private Cloud','Hybrid Cloud','Offline Cloud'],a:2,e:'Hybrid คือการผสม Private กับ Public เพื่อความสมดุลของความปลอดภัยและต้นทุน'},
+{t:'ภารกิจป้องกันแฮกเกอร์',k:'mc',q:'ข้อใดช่วยลดความเสี่ยงบัญชีคลาวด์ถูกแฮกได้ดีที่สุด?',o:['ใช้รหัสผ่านเดียวกันทุกเว็บจะได้จำง่าย','เปิดการยืนยันตัวตนสองขั้นตอน (2FA)','บอกรหัสให้เพื่อนสนิทเก็บไว้','จดรหัสแปะไว้ที่หน้าจอ'],a:1,e:'2FA ทำให้ต่อให้รหัสผ่านหลุด คนร้ายก็ยังเข้าไม่ได้ง่ายๆ'},
+{t:'ตัวหลอกอยู่ไหน?',k:'mc',q:'ข้อใด “ไม่ใช่” ลักษณะสำคัญของคลาวด์?',o:['ใช้งานได้ตามต้องการ','เข้าถึงผ่านเครือข่ายอินเทอร์เน็ต','ต้องซื้อและติดตั้งเซิร์ฟเวอร์เองทุกครั้งก่อนใช้','จ่ายตามปริมาณการใช้งาน'],a:2,e:'ข้อนี้คือวิธีแบบดั้งเดิม คลาวด์ช่วยให้ไม่ต้องลงทุนซื้อเครื่องเอง'},
+{t:'ข้อเสียที่ต้องรู้',k:'mc',q:'อินเทอร์เน็ตที่โรงเรียนล่ม ครูเปิดสไลด์ที่เก็บไว้บนคลาวด์ไม่ได้ นี่คือข้อจำกัดข้อใด?',o:['พึ่งพาอินเทอร์เน็ต','ข้อมูลหายถาวร','ค่าไฟแพง','ไฟล์ถูกเข้ารหัสหมด'],a:0,e:'วิธีรับมือ: เตรียมไฟล์ออฟไลน์สำรองสำหรับงานสำคัญ'},
+{t:'ภารกิจช่วงสอบ',k:'mc',q:'ช่วงสอบ ระบบส่งงานของโรงเรียนมีคนเข้าพร้อมกันเยอะมาก พอสอบเสร็จคนใช้น้อยลง ระบบบนคลาวด์ควรทำอย่างไร?',o:['ขยายทรัพยากรตอนคนเยอะ แล้วลดลงตอนคนน้อย','ปิดระบบจนกว่าจะสอบเสร็จ','ซื้อเซิร์ฟเวอร์เพิ่มถาวรทุกครั้ง','จำกัดให้เข้าได้ทีละคน'],a:0,e:'Scalability / Elasticity: ปรับขนาดตามความต้องการ จ่ายเฉพาะที่ใช้จริง'},
+{t:'ตามหาบ้านของไฟล์',k:'mc',q:'ไฟล์ที่เราอัปโหลดขึ้นคลาวด์ จริงๆ แล้วถูกเก็บอยู่ที่ใด?',o:['ในก้อนเมฆบนท้องฟ้า','ในอินเทอร์เน็ตที่ไม่มีที่อยู่จริง','ในศูนย์ข้อมูล (Data Center) ของผู้ให้บริการ','ในแอปบนมือถือของเรา'],a:2,e:'Data Center คืออาคารที่รวมเซิร์ฟเวอร์จำนวนมาก ตั้งอยู่หลายแห่งทั่วโลก'},
+{t:'เมฆจริงหรือเมฆปลอม?',k:'tf',q:'ใช้คลาวด์ต้องจ่ายเท่ากันทุกเดือน ไม่ว่าจะใช้มากหรือน้อย',a:'ปลอม ❌',e:'หลายบริการคิดเงินแบบ Pay-as-you-go ใช้เท่าไรจ่ายเท่านั้น คล้ายค่าน้ำค่าไฟ'},
+{t:'ใครคือคลาวด์ตัวจริง?',k:'mc',q:'ข้อใดคือตัวอย่างผู้ให้บริการ Public Cloud รายใหญ่?',o:['AWS, Microsoft Azure, Google Cloud','Windows, macOS, Linux','Word, Excel, PowerPoint','Chrome, Firefox, Safari'],a:0,e:'ข้ออื่นเป็นระบบปฏิบัติการ โปรแกรมสำนักงาน และเบราว์เซอร์ ไม่ใช่ผู้ให้บริการคลาวด์'},
+{t:'ภารกิจสตาร์ทอัพงบน้อย',k:'mc',q:'ทำไมสตาร์ทอัพงบน้อยจึงนิยมใช้คลาวด์ในช่วงเริ่มต้น?',o:['เริ่มได้โดยไม่ต้องลงทุนซื้ออุปกรณ์ราคาแพง','เพราะคลาวด์ฟรีทุกบริการตลอดไป','เพราะไม่ต้องใช้อินเทอร์เน็ต','เพราะไม่มีค่าใช้จ่ายเมื่อใช้งานมาก'],a:0,e:'จ่ายตามการใช้งานจริง เติบโตแล้วค่อยขยาย ลดความเสี่ยงด้านเงินลงทุน'},
+{t:'ภารกิจโน้ตบุ๊กหาย',k:'mc',q:'โน้ตบุ๊กหาย แต่ไฟล์งานซิงก์ไว้บนคลาวด์แล้ว จะเกิดอะไรขึ้น?',o:['ไฟล์หายไปพร้อมเครื่องทั้งหมด','ล็อกอินจากเครื่องอื่นแล้วยังเปิดไฟล์ได้','ต้องซื้อโน้ตบุ๊กเครื่องเดิมก่อนถึงจะเปิดได้','ไฟล์จะถูกลบเองทุกที่'],a:1,e:'ไฟล์อยู่ที่เซิร์ฟเวอร์ ควรรีบเปลี่ยนรหัสผ่านและออกจากระบบเครื่องที่หายด้วย'},
+{t:'🌈 โอกาสทอง',k:'rainbow'},
+{t:'⛈️ เมฆพายุ',k:'storm'}
+];
+let teams=[],tn=['ทีมสายฟ้า','ทีมสายลม','ทีมสายรุ้ง','ทีมสายฝน','ทีมตะวัน'],n=3,mult=1,turn=0,cur=null,clueIdx=0,done=0;
+const $=id=>document.getElementById(id);
+
+let AC,sfxOn=true,musOn=true,mt,started=false,bump=-1;
+function ac(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}
+function tone(f,t0,d,type='sine',v=.15,force){if(!sfxOn&&!force)return;const a=ac(),o=a.createOscillator(),g=a.createGain(),T=a.currentTime+t0;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.02);g.gain.exponentialRampToValueAtTime(.001,T+d);o.connect(g);g.connect(a.destination);o.start(T);o.stop(T+d+.05)}
+function noise(d,v,lp){if(!sfxOn)return;const a=ac(),n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=(Math.random()*2-1)*(1-i/n);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();f.type='lowpass';f.frequency.value=lp;g.gain.value=v;s.buffer=b;s.connect(f);f.connect(g);g.connect(a.destination);s.start()}
+const SFX={pop(){tone(520,0,.12,'triangle');tone(780,.06,.14,'triangle')},reveal(){tone(392,0,.15);tone(587,.1,.3)},win(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.3,'triangle',.18))},none(){tone(330,0,.25,'sawtooth',.07);tone(247,.2,.4,'sawtooth',.07)},rain(){[784,988,1175,1568,1976].forEach((f,i)=>tone(f,i*.07,.35,'sine',.13))},storm(){noise(1.3,.6,500);tone(70,0,.9,'sawtooth',.18)},turn(){tone(660,0,.18,'sine',.1);tone(880,.12,.25,'sine',.1)},fan(){[523,659,784,659,784,1047,1319].forEach((f,i)=>tone(f,i*.14,.4,'triangle',.18))}};
+function sfx(n){try{SFX[n]()}catch(e){}}
+let nxt=0,e8=0,NB;
+const CH=[[220,261.6,329.6],[174.6,220,261.6],[261.6,329.6,392],[196,246.9,293.7]],BS=[110,87.3,130.8,98],
+LD=[[880,0,1047,0,1319,0,1047,0],[1047,0,880,0,1047,0,1175,0],[1319,0,1047,0,784,0,1047,0],[1175,0,987,0,784,0,987,1175]];
+function m1(f,T,d,ty,v,fr){const a=ac(),o=a.createOscillator(),g=a.createGain();o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.008);g.gain.exponentialRampToValueAtTime(.001,T+d);if(fr){const q=a.createBiquadFilter();q.type='lowpass';q.frequency.value=fr;o.connect(q);q.connect(g)}else o.connect(g);g.connect(a.destination);o.start(T);o.stop(T+d+.05)}
+function mn(T,d,v,ty,fr){const a=ac();if(!NB){NB=a.createBuffer(1,a.sampleRate*.3,a.sampleRate);const x=NB.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();f.type=ty;f.frequency.value=fr;g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.001,T+d);s.buffer=NB;s.connect(f);f.connect(g);g.connect(a.destination);s.start(T);s.stop(T+d)}
+function kick(T){const a=ac(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(150,T);o.frequency.exponentialRampToValueAtTime(42,T+.13);g.gain.setValueAtTime(.2,T);g.gain.exponentialRampToValueAtTime(.001,T+.2);o.connect(g);g.connect(a.destination);o.start(T);o.stop(T+.22)}
+function play(T,e){const bar=Math.floor(e/16)%4,k=e%16,sec=Math.floor(e/64)%2,ch=CH[bar];
+ if(k===0)ch.forEach(f=>m1(f,T,2,'sine',.02));
+ if([0,3,6,8,10,14].includes(k))m1(BS[bar]*(k===10?2:1),T,.2,'sawtooth',.06,380);
+ m1(ch[[0,1,2,1][k%4]]*2,T,.13,'sawtooth',.022,2400);
+ if(sec&&k%2===0&&LD[bar][k/2])m1(LD[bar][k/2],T,.3,'triangle',.055);
+ if(k%4===0)kick(T);
+ if(k===4||k===12)mn(T,.14,.07,'bandpass',1700);
+ if(k%4===2)mn(T,.07,.035,'highpass',7500);
+ else if(sec&&k%2===1)mn(T,.03,.015,'highpass',9000)}
+function sched(){const a=ac();if(nxt<a.currentTime)nxt=a.currentTime+.05;while(nxt<a.currentTime+.3){try{play(nxt,e8)}catch(e){}nxt+=.13;e8++}}
+function music(){clearInterval(mt);if(!musOn||!started)return;nxt=ac().currentTime+.05;mt=setInterval(sched,100)}
+function tgS(){sfxOn=!sfxOn;$('bs').textContent=sfxOn?'🔊 เสียง':'🔇 เสียง'}
+function tgM(){musOn=!musOn;$('bm').textContent=musOn?'🎵 เพลง':'🎵 ปิด';music()}
+function burst(n){const E=['🎉','⭐','☁️','✨','💙','🌈'];for(let i=0;i<n;i++){const s=document.createElement('span');s.className='cf';s.textContent=E[i%6];s.style.cssText='left:'+Math.random()*100+'vw;font-size:'+(16+Math.random()*22)+'px;animation-duration:'+(1.8+Math.random()*1.8)+'s;animation-delay:'+Math.random()*.4+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),4400)}}
+function float(t){const d=document.createElement('div');d.className='fl';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1400)}
+function shake(){document.body.classList.add('shk');setTimeout(()=>document.body.classList.remove('shk'),700)}
+function renderIn(){$('tin').innerHTML=tn.slice(0,n).map((v,i)=>`<input value="${v}" oninput="tn[${i}]=this.value">`).join('')}
+function addT(d){n=Math.min(5,Math.max(2,n+d));renderIn()}
+renderIn();
+function start(){started=true;ac();sfx('fan');music();burst(16);teams=tn.slice(0,n).map(x=>({name:x||'ทีม',s:0}));$('setup').classList.add('hide');$('game').classList.remove('hide');
+ const order=CARDS.map((c,i)=>i).sort(()=>Math.random()-.5);
+ $('board').innerHTML=order.map((i,p)=>`<button class="cloud" id="c${i}" onclick="open_(${i})"><span>${p+1}</span></button>`).join('');drawScore()}
+const COL=['#ef476f','#06b6d4','#f5a623','#8b5cf6','#22c55e'];
+function rank(s){return s>=140?'👑 Cloud Master':s>=80?'🛠️ Cloud Engineer':s>=30?'🧭 Cloud Explorer':'🌱 Cloud Rookie'}
+function drawScore(){$('pb').style.width=(done/CARDS.length*100)+'%';$('pl').textContent='เปิดแล้ว '+done+' / '+CARDS.length+' ก้อน';$('turn').innerHTML=`🎯 ตาของ <b style="color:${COL[turn]}">${teams[turn].name}</b> — เลือกก้อนเมฆได้เลย!`+(mult>1?' <span class="x2">🌈 ข้อนี้คะแนน x2</span>':'');$('score').innerHTML=teams.map((t,i)=>`<div class="sc${i===turn?' on':''}${i===bump?' bump':''}" style="--tc:${COL[i]}"><span>${t.name}</span><b>${t.s}</b><span>${rank(t.s)}</span></div>`).join('')+(mult>1?'<div class="sc x2">🌈 คะแนน x2<br>ข้อถัดไป!</div>':'')}
+function show(h){$('mbody').innerHTML=h;$('modal').classList.remove('hide')}
+function close_(){$('modal').classList.add('hide');drawScore()}
+function mark(){$('c'+cur).classList.add('done');$('c'+cur).innerHTML='<span>✓</span>';done++;if(CARDS[cur].k!=='rainbow')turn=(turn+1)%teams.length;close_();if(done===CARDS.length)setTimeout(finish,900);else setTimeout(()=>sfx('turn'),800)}
+function open_(i){cur=i;clueIdx=0;bump=-1;const c=CARDS[i];sfx(c.k==='rainbow'?'rain':c.k==='storm'?'storm':'pop');if(c.k==='rainbow')burst(24);if(c.k==='storm')shake();
+ if(c.k==='rainbow'){mult=2;return show(`<h2>${c.t}</h2><p class="q">${teams[turn].name} ได้คะแนน x2 ในข้อถัดไป! เลือกก้อนเมฆต่อได้เลย</p><button onclick="mark()">เยี่ยม!</button>`)}
+ if(c.k==='storm'){return show(`<h2>${c.t}</h2><p class="q">พายุเข้า! เลือกทีมที่จะโดนหัก 10 คะแนน (ครูให้นักเรียนโหวตหรือจับสลาก)</p><div class="row">${teams.map((t,j)=>`<button onclick="teams[${j}].s=Math.max(0,teams[${j}].s-10);mark()">${t.name}</button>`).join('')}<button class="alt" onclick="mark()">รอดทุกทีม 🌤️</button></div>`)}
+ draw(false)}
+function pts(){const c=CARDS[cur];return(c.k==='clue'?[30,20,10][Math.min(clueIdx,2)]:c.k==='mc'?30:20)*mult}
+function draw(rev){if(rev)sfx('reveal');const c=CARDS[cur];let h=`<span class="tag">${c.t}</span> <span class="tag" style="background:${COL[turn]}">ตาของ ${teams[turn].name}</span>`;
+ if(c.k==='clue'){h+=`<div class="q">`+c.c.slice(0,clueIdx+1).map((x,i)=>`💡${i+1}. ${x}`).join('<br>')+`</div>`}
+ else h+=`<div class="q">${c.q}</div>`;
+ if(c.k==='mc')h+=c.o.map((o,i)=>`<div class="opt ${rev&&i===c.a?'right':''}"><i>${'กขคง'[i]}</i>${o}</div>`).join('');
+ h+=`<p>ตอบถูกได้ <b>${pts()}</b> คะแนน ${mult>1?'<span class="x2">(x2 🌈)</span>':''}</p>`;
+ if(!rev){h+=`<div class="row">`+(c.k==='clue'&&clueIdx<2?`<button class="alt" onclick="clueIdx++;draw(false)">💡 ขอคำใบ้เพิ่ม</button>`:'')+`<button onclick="draw(true)">✅ เฉลย</button></div>`}
+ else{h+=`<div class="ans"><b>คำตอบ: ${c.k==='mc'?c.o[c.a]:c.a}</b><br>${c.e}</div><b>ทีมไหนตอบถูก?</b><div class="row">${teams.map((t,j)=>`<button onclick="give(${j})">${t.name}</button>`).join('')}<button class="alt" onclick="give(-1)">ไม่มีใครตอบได้</button></div>`}
+ show(h)}
+function give(j){if(j>=0){const p=pts();teams[j].s+=p;bump=j;sfx('win');burst(26);float('+'+p)}else sfx('none');mult=1;mark()}
+function finish(){sfx('fan');burst(60);const r=[...teams].sort((a,b)=>b.s-a.s);
+ show(`<h2 style="text-align:center">🏆 ผลการแข่งขัน</h2><p class="q" style="text-align:center">ผู้ครองตำแหน่ง ☁️ The Cloud Master ☁️<br><span class="x2">${r[0].name}</span></p>`+r.map((t,i)=>`<div class="rank"><span>${['🥇','🥈','🥉'][i]||'🎖️'} ${t.name} <small>${rank(t.s)}</small></span><b>${t.s}</b></div>`).join('')+`<div class="row"><button class="alt" onclick="close_()">กลับไปดูกระดาน</button><button onclick="location.reload()">เล่นใหม่</button></div>`)}
+</script></body></html>
